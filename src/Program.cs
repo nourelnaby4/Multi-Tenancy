@@ -1,6 +1,11 @@
+using API.Settings;
+using Microsoft.Extensions.Options;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.Configure<TenantSettings>(builder.Configuration.GetSection(nameof(TenantSettings)));
+builder.Services.AddSingleton(sp => sp.GetRequiredService<IOptions<TenantSettings>>().Value);
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
