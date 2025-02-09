@@ -1,4 +1,5 @@
 ﻿using API.Settings;
+using Microsoft.Extensions.Options;
 
 namespace API.Services;
 
@@ -8,10 +9,10 @@ public class TenantService : ITenantService
     private HttpContext? _httpContext;
     private readonly TenantSettings _tenantSettings;
 
-    public TenantService(IHttpContextAccessor contextAccessor,TenantSettings tenantSettings)
+    public TenantService(IHttpContextAccessor contextAccessor,IOptions< TenantSettings> tenantSettings)
     {
         _httpContext = contextAccessor.HttpContext;
-        _tenantSettings = tenantSettings;
+        _tenantSettings = tenantSettings.Value;
 
         if (_httpContext is not null)
         {
